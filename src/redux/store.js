@@ -1,17 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import complexCounetrReducer from './Counter/counter-reducer';
 
-const initialState = { counterValue: 0 };
-const reducer = (state = initialState, { type, payload }) => {
-   switch (type) {
-      case 'counet/increment':
-         return { counterValue: state.counterValue + payload };
-      case 'counet/decrement':
-         return { counterValue: state.counterValue - payload };
-      default:
-         return state;
-   }
-};
-
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+   counter: complexCounetrReducer,
+});
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
 
 export default store;
