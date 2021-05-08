@@ -1,27 +1,16 @@
 import { combineReducers } from 'redux';
-import actionTypes from './couner-types';
-const initialState = { counterValue: 0, step: 1 };
-const valueReducer = (state = initialState.counterValue, { type, payload }) => {
-   switch (type) {
-      case actionTypes.INCREMETN:
-         return state + payload;
-      case actionTypes.DECREMENT:
-         return state - payload;
-      default:
-         return state;
-   }
-};
+import { createReducer } from '@reduxjs/toolkit';
+import * as actions from './couner-actions';
 
-const stepReducer = (state = initialState.step, { type, payload }) => {
-   switch (type) {
-      case actionTypes.SET_STEP:
-         return (state = payload);
-      case actionTypes.ZERO_STEP:
-         return (state = payload);
-      default:
-         return state;
-   }
-};
+const valueReducer = createReducer(0, {
+   [actions.increment]: (state, { payload }) => state + payload,
+   [actions.decrement]: (state, { payload }) => state - payload,
+});
+
+const stepReducer = createReducer(1, {
+   [actions.saveStep]: (_, { payload }) => payload,
+   [actions.zeroStep]: state => (state = 1),
+});
 
 const complexCounetrReducer = combineReducers({
    counterValue: valueReducer,

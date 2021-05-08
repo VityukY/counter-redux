@@ -1,10 +1,18 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import complexCounetrReducer from './Counter/counter-reducer';
 
-const rootReducer = combineReducers({
-   counter: complexCounetrReducer,
-});
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware()));
+const counterPersistConfig = {
+   key: 'couner',
+   storage,
+};
 
-export default store;
+export const store = configureStore({
+   reducer: {
+      counter: persistReducer(counterPersistConfig, complexCounetrReducer),
+   },
+   devTools: process.env.NODE_ENV === 'development',
+});
+export const persistor = persistStore(store);

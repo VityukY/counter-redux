@@ -1,20 +1,6 @@
-import actionTypes from './couner-types';
+import { createAction } from '@reduxjs/toolkit';
 
-export const increment = value => ({
-   type: actionTypes.INCREMETN,
-   payload: value,
-});
-export const decrement = value => ({
-   type: actionTypes.DECREMENT,
-   payload: value,
-});
-
-export const saveStep = newStep => ({
-   type: actionTypes.SET_STEP,
-   payload: newStep,
-});
-
-export const zeroStep = () => ({
-   type: actionTypes.ZERO_STEP,
-   payload: 1,
-});
+export const increment = createAction('counet/increment');
+export const decrement = createAction('counet/decrement');
+export const saveStep = createAction('counetr/setStep');
+export const zeroStep = createAction('counter/zeroStep');
